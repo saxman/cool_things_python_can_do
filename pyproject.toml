@@ -1,0 +1,16 @@
+[project]
+name = "cool-things-python-can-do"
+version = "0.1.0"
+description = "A collection of Jupyter notebooks demonstrating idiomatic Python 3"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "beautifulsoup4>=4.14.3",
+    "ipykernel>=7.2.0",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+    "requests>=2.33.1",
+    "scikit-learn>=1.8.0",
+    "scipy>=1.15.0",
+]
