@@ -30,22 +30,46 @@ Type hints don't change what Python does at runtime. They change what your tools
 ### 08 - Concurrency
 Three concurrency models. Most developers only know one. `ThreadPoolExecutor` parallelises I/O-bound work (network calls, file reads) with minimal code changes. `asyncio` handles thousands of concurrent tasks on a single thread with near-zero overhead. `ProcessPoolExecutor` breaks through the GIL for genuinely CPU-heavy work with real parallel processes. This notebook shows all three, when each one shines, and what happens when you pick the wrong one.
 
-### 09 - Web Requests and Scraping
+### 09 - Functional Programming
+Python treats functions as first-class objects: pass them, return them, compose them. `functools` builds on this with tools that make the pattern shine. `partial` freezes some arguments so you can reuse a function across contexts. `lru_cache` turns any pure function into a memoised lookup in one decorator: recursive Fibonacci becomes instant. `wraps` preserves the metadata your decorators would otherwise destroy. `total_ordering` derives all six comparison methods from just two. Pair these with `map`, `filter`, and `sorted`'s `key=` argument and you get expressive, composable code with no loops in sight.
+
+### 10 - Regular Expressions
+The `re` module gives Python a full regular-expression engine. A single pattern can validate an email address, extract all phone numbers from a document, or reformat every date in a file, faster and more precisely than any string method chain. This notebook covers the full toolkit: `search`, `match`, `findall`, `finditer`, capture groups, named groups, `sub` with a replacement function, lookahead and lookbehind assertions, flags (`re.IGNORECASE`, `re.MULTILINE`, `re.DOTALL`), compiled patterns, and `re.VERBOSE` for patterns readable enough to maintain.
+
+### 11 - Structural Pattern Matching
+Added in Python 3.10, `match`/`case` is not a switch statement. It matches the *structure* of data: sequences by length and position, mappings by key, class instances by attribute, and literals by value. Guards let you add `if` conditions inline. Nested patterns handle deeply structured data (JSON responses, AST nodes, protocol messages) in a single readable block that would otherwise be an `isinstance` chain wrapped in loops. If you work with heterogeneous data, this changes how you write dispatch logic.
+
+### 12 - pathlib and File IO
+`pathlib.Path` replaces `os.path` with an object-oriented interface that composes naturally. Build paths with `/`, navigate with `.parent`, glob with `.glob('**/*.py')`, and read or write with a single method call. This notebook pairs `pathlib` with the full standard-library I/O toolkit: `json` for structured data, `csv.DictReader`/`DictWriter` for tabular data, `pickle` for arbitrary Python objects, `tempfile` for safe temporary files, and `shutil` for copying, moving, and deleting entire directory trees. Every pattern you need to read and write files without touching `open` by hand.
+
+### 13 - Logging and Debugging
+`print` statements are not a logging strategy. The `logging` module gives you severity levels, named loggers, multiple simultaneous destinations, and hierarchical namespaces, so library code and application code each control their own output without interfering. This notebook covers the idiomatic setup (`logger = logging.getLogger(__name__)`), handlers and formatters, routing warnings to file and errors to console simultaneously, and logging exceptions with full tracebacks. Then `breakpoint()` for interactive debugging, and the `traceback` module for programmatic introspection of exceptions.
+
+### 14 - Testing with pytest
+Untested code is code that only works by accident. pytest is Python's most popular testing framework: write plain functions that start with `test_`, use plain `assert`, and pytest finds and runs them all. No subclassing `TestCase`, no `self.assertEqual`. Fixtures handle setup and teardown with a dependency-injection model that keeps tests independent. `parametrize` runs the same test against a table of inputs in one decorator. `unittest.mock` patches out network calls, filesystems, and external services so your tests are fast and deterministic even without the real thing.
+
+### 15 - Building CLI Tools
+Python is an excellent scripting language, and `argparse` makes it easy to turn a script into a proper CLI with named options, type validation, subcommands, and auto-generated `--help`. For more user-friendly interfaces, `click` replaces the parser setup with decorators: `@click.command()`, `@click.option()`, `@click.argument()`. Commands compose into groups, output styling is built in, and testing is straightforward. This notebook covers both, so you can pick the right tool for the job.
+
+### 16 - Database Access
+Python's `sqlite3` module ships a fully relational database with no installation required: connect, create tables, insert rows, and query, all from the stdlib. For production databases (PostgreSQL, MySQL, or still SQLite), SQLAlchemy adds a unified API, a composable SQL expression language, and a full ORM with declarative models, sessions, and relationships. Write your model once and SQLAlchemy handles the SQL. This notebook covers both layers, from raw cursor operations to a complete ORM workflow.
+
+### 17 - Web Requests and Scraping
 The web is the world's largest dataset, and most of it is freely accessible if you know how to ask. `requests` handles HTTP in one line: GET, POST, headers, authentication, sessions. BeautifulSoup turns raw HTML into a searchable tree: find elements by tag, class, or CSS selector; extract text, links, and attributes. Together they let you pull data from any page a browser can see. The notebook works through real-world patterns including pagination and a live scrape.
 
-### 10 - Data Analysis with pandas
+### 18 - Data Analysis with pandas
 pandas is a big reason Python became the language of data science. A DataFrame is a spreadsheet you control entirely with code: filter rows with a boolean expression, group and aggregate in one call, join two tables like SQL, handle missing values without a plugin. It scales to millions of rows without breaking a sweat. This notebook covers the full workflow: loading, inspecting, filtering, transforming, groupby, merging, and missing data. Every step is one method call.
 
-### 11 - Numerical Computing with NumPy
+### 19 - Numerical Computing with NumPy
 NumPy arrays are 50–100× faster than Python lists for numerical work because operations run in compiled C, not interpreted Python. And you never write a loop. Broadcasting lets you add a 1D array to a 2D array and Python figures out the shape. Universal functions apply math operations element-wise across entire arrays instantly. This notebook covers aggregation along axes, reshaping, stacking, and linear algebra, the building blocks that every scientific Python library is built on.
 
-### 12 - Visualization with Matplotlib
+### 20 - Visualization with Matplotlib
 Numbers become insight when you can see them. Matplotlib turns NumPy arrays and pandas DataFrames into publication-quality charts with fine-grained control over every element. Line plots, scatter plots, bar charts, histograms, multi-panel layouts, all built with the object-oriented API that scales from a quick exploratory plot to a polished visual ready for a paper or presentation. Including annotations, custom styles, and saving to disk.
 
-### 13 - Scientific Computing with SciPy
+### 21 - Scientific Computing with SciPy
 SciPy is where Python stops being a scripting language and starts being a scientific computing platform. Statistical distributions and hypothesis tests in one function call. Numerical optimisation that finds the minimum of any function without calculus. Curve fitting that extracts parameters from noisy data. Numerical integration and ODE solvers for continuous systems. Interpolation for filling gaps between measurements. This notebook shows Python doing the work of MATLAB and R, built on NumPy arrays you already know.
 
-### 14 - Machine Learning with scikit-learn
+### 22 - Machine Learning with scikit-learn
 Every algorithm in scikit-learn (logistic regression, random forests, k-means, SVMs) shares the same three-method interface: `fit`, `predict`, `score`. Swap one model for another in a single line. This notebook covers the full ML workflow: preprocessing features, building pipelines that physically prevent data leakage, cross-validation for honest accuracy estimates, and grid search for hyperparameter tuning. The hard part of ML is understanding your data. The code part doesn't have to be.
 
 ---
